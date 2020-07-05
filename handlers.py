@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 from telegram import ReplyKeyboardRemove, ReplyKeyboardMarkup, ParseMode
 from telegram.ext import ConversationHandler
 import requests
+from glob import glob
+from random import choice
 
 
 # Функция sms() описывает логику обработки команды /start
@@ -10,6 +12,13 @@ def sms(bot, update):
     print('Кто-то отправил команду /start. Что мне делать?') # Сообщение в консоль
     bot.message.reply_text('Здравствуйте {}, я Робот! \nПоговорите со мной!'.format(bot.message.chat.first_name), reply_markup=get_keyboard())
     #print(bot.message)
+
+
+# функция отправляет случайную картинку
+def send_meme(bot, update):
+    lists = glob('images/*')  # создаем список из названий картинок
+    picture = choice(lists)  # берем из списка одну картинку
+    update.bot.send_photo(chat_id=bot.message.chat.id, photo=open(picture, 'rb'))  # отправляем картинку
 
 
 # Функция Анекдот
