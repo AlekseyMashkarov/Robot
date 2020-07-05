@@ -1,15 +1,20 @@
 # Импорт компонентов
-from telegram.ext import Updater, CommandHandler, MessageHandler, ConversationHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from settings import TG_TOKEN, TG_API_URL
 from handlers import *
+import logging
 
-
+# Настройки логгирования (Дата и время события, уровень важности, сообщение; Получение информационного события, Файл для записи логов)
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
+                    level=logging.INFO,
+                    filename='bot.log'
+                    )
 
 
 # Функция main() для соединения с платформой Telegram
 def main():
     my_bot = Updater(TG_TOKEN, TG_API_URL, use_context=True)
-
+    logging.info('Start bot')
     my_bot.dispatcher.add_handler(CommandHandler('start', sms)) # Обработчик команды /start
     my_bot.dispatcher.add_handler(MessageHandler(Filters.regex('Начать'), sms)) # обрабатываем текст кнопки
     my_bot.dispatcher.add_handler(MessageHandler(Filters.regex('Анекдот'), get_anecdote)) # обрабатываем текст кнопки
