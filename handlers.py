@@ -1,4 +1,7 @@
 from utility import get_keyboard
+from utility import SMILE
+
+from emoji import emojize
 from bs4 import BeautifulSoup
 from telegram import ReplyKeyboardRemove, ReplyKeyboardMarkup, ParseMode
 from telegram.ext import ConversationHandler
@@ -9,8 +12,9 @@ from random import choice
 
 # Функция sms() описывает логику обработки команды /start
 def sms(bot, update):
+    smile = emojize(choice(SMILE), use_aliases=True)
     print('Кто-то отправил команду /start. Что мне делать?') # Сообщение в консоль
-    bot.message.reply_text('Здравствуйте {}, я Робот! \nПоговорите со мной!'.format(bot.message.chat.first_name), reply_markup=get_keyboard())
+    bot.message.reply_text('Здравствуйте {}, я Робот! \nПоговорите со мной!'.format(bot.message.chat.first_name, smile), reply_markup=get_keyboard())
     #print(bot.message)
 
 
